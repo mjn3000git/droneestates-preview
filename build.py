@@ -5,12 +5,32 @@ ROOT = Path(__file__).parent
 
 LOGO = '''<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="1" y="1" width="38" height="38" stroke="#3ea6f2" stroke-width="1.5"/><path d="M1 9V1h8M31 1h8v8M39 31v8h-8M9 39H1v-8" stroke="#fff" stroke-width="2"/><circle cx="20" cy="20" r="6" stroke="#fff" stroke-width="1.5"/><path d="M20 8v6M20 26v6M8 20h6M26 20h6" stroke="#3ea6f2" stroke-width="1.5"/></svg>'''
 
-NAV = [("index.html","Home"),("services.html","Services"),("gallery.html","Gallery"),("about.html","About")]
+NAV = [("index.html","Home"),("services.html","Services"),("pricing.html","Pricing"),("gallery.html","Gallery"),("about.html","About")]
 
 def vf(img, alt, extra="", hud="", cls="vf", lazy=True, attrs=""):
     load = ' loading="lazy"' if lazy else ''
     return (f'<div class="{cls}"{attrs}><img src="img/{img}" alt="{alt}"{load}>'
             f'<div class="thirds"></div><div class="brk"><i></i><i></i><i></i><i></i></div><div class="xh"></div>{hud}{extra}</div>')
+
+import json, html as _html
+DOMAIN = "https://droneestates.com/"
+HOME_LD = {"@context": "https://schema.org", "@type": "ProfessionalService", "name": "Drone Estates",
+    "url": DOMAIN, "description": "Drone photos and aerial views for homeowners, events, and real estate.",
+    "image": DOMAIN + "img/hero.jpg", "serviceType": "Aerial photography and video"}
+
+def seo_head(slug, title, desc):
+    url = DOMAIN + ("" if slug == "index.html" else slug)
+    e = lambda s: _html.escape(s, quote=True)
+    out = f"""<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Drone Estates">
+<meta property="og:title" content="{e(title)}">
+<meta property="og:description" content="{e(desc)}">
+<meta property="og:image" content="{DOMAIN}img/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">"""
+    return out
 
 def page(slug, title, desc, body):
     links = "".join(f'<a href="{h}"{" class=\"on\"" if h==slug else ""}>{t}</a>' for h,t in NAV)
@@ -23,12 +43,15 @@ def page(slug, title, desc, body):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
+<meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+{seo_head(slug, title, desc)}
 </head>
 <body>
+<div class="preview-banner">PREVIEW MOCK-UP, not the live site. Pricing shown is placeholder only.</div>
 <header class="site-head"><div class="wrap">
 <a class="brand" href="index.html">{LOGO}<span>Drone Estates<small>Aerial photography</small></span></a>
 <input type="checkbox" id="mt" class="menu-toggle"><label for="mt" class="menu-btn" aria-label="Menu"><span></span></label>
@@ -109,6 +132,17 @@ home = f'''
 </div>
 </section>
 
+<section class="price-teaser" style="padding-top:0">
+<div class="wrap">
+<div class="teaser rv">
+<div><div class="eyebrow mono">Pricing <b>/ 03 tiers</b></div>
+<h2>Clear packages,<br>quoted per property.</h2>
+<p>Basic, Standard and Premium packages for listing photos and video, plus roof and lot views. Packages start at <span class="ph-inline">$[TBD]</span>, and every quote is confirmed for your property before the flight.</p></div>
+<div class="btns"><a class="btn" href="inquire.html">Request a quote <span class="arr">&rarr;</span></a><a class="btn ghost" href="pricing.html">See pricing</a></div>
+</div>
+</div>
+</section>
+
 <section class="band">
 {vf("canopy.jpg","View from above a roofline into tall trees", cls="vf", extra='<div class="inner"><div class="wrap"><div class="eyebrow mono">Ready when you are</div><h2>Have a place you want to see from the air?</h2><p>Tell us the date, the location, and what you want to capture.</p><div class="btns"><a class="btn" href="inquire.html">Start an inquiry <span class="arr">&rarr;</span></a></div></div></div>', hud='<div class="hud tr mono"><span class="rec">Rec</span><span>Frame 05</span></div>')}
 </section>
@@ -118,6 +152,7 @@ home = f'''
 def card(id_, n, img, alt, title, text, tags, note=""):
     t = "".join(f"<li>{x}</li>" for x in tags)
     nt = f'<span class="ph-note">{note}</span>' if note else ""
+    nt = f'<p class="from mono">Starting at <span class="ph-inline">$[TBD]</span> <a href="pricing.html">See pricing &rarr;</a></p>' + nt
     return f'''<article class="card rv" id="{id_}">{vf(img, alt, hud=f'<div class="hud tl mono"><span>{n}</span></div>')}
 <div class="body"><span class="num mono">Service {n}</span><h3>{title}</h3><p>{text}</p><ul>{t}</ul>{nt}</div></article>'''
 
@@ -176,22 +211,21 @@ document.addEventListener('keydown',e=>{{if(e.key==='Escape')lb.classList.remove
 about = f'''
 <section class="page-hero"><div class="wrap">
 <div class="eyebrow mono">About <b>/ 01</b></div>
-<h1>The pilot behind the lens.</h1>
+<h1>Your place, seen from above.</h1>
 </div></section>
 <section><div class="wrap split">
 <div class="rv">{vf("canopy.jpg","View from above a roofline into tall trees", hud='<div class="hud bl mono"><span>Over the roofline</span></div>')}</div>
 <div class="rv">
 <h3>The gear</h3>
 <p>Every shoot is flown on DJI drones and captured in 4K, for both photos and video.</p>
-<div class="placeholder"><span class="tag">PLACEHOLDER</span>
-<h3>Bio: Matthew to fill in</h3>
-<p>This box holds the spot for a short bio in Matthew's own words. Nothing here is final.</p>
-<ul>
-<li>A few sentences about who you are and why you fly</li>
-<li>Any certifications or insurance, only if you want them listed</li>
-<li>Where you are based and the area you cover</li>
-</ul>
-</div>
+<h3>What we do</h3>
+<p>Drone Estates captures aerial photos and video of homes, properties, and events. You tell us what you want to see from the air, and we plan the shoot around your date and location.</p>
+<h3>How it works</h3>
+<ol>
+<li>Send an inquiry with the date, the place, and what you'd like captured.</li>
+<li>We confirm the details and plan the flight.</li>
+<li>The shoot is flown, and you receive your photos and video.</li>
+</ol>
 <div class="btns"><a class="btn" href="inquire.html">Inquire <span class="arr">&rarr;</span></a><a class="btn ghost" href="gallery.html">View the gallery</a></div>
 </div>
 </div></section>
@@ -235,9 +269,79 @@ inquire = f'''
 <script src="js/inquiry.js"></script>
 '''
 
+# ---------- PRICING (draft, placeholders for Grant) ----------
+PH = '<span class="ph-inline">[Price TBD, from Grant]</span>'
+def tier(n, name, blurb, items, feat=False):
+    li = "".join(f"<li>{x}</li>" for x in items)
+    badge = '<span class="badge mono">Most popular (draft)</span>' if feat else ''
+    return f'''<article class="tier rv{" feat" if feat else ""}">{badge}
+<span class="num mono">Tier {n}</span><h3>{name}</h3>
+<div class="range">From $[X] to $[Y]<br>{PH}</div>
+<p>{blurb}</p><ul class="checks">{li}</ul>
+<span class="ph-note">Draft description. Final package contents to be confirmed.</span>
+</article>'''
+
+pricing = f'''
+<section class="page-hero"><div class="wrap">
+<div class="eyebrow mono">Pricing <b>/ Draft</b></div>
+<h1>Pricing.</h1>
+<p>Three packages for drone listing photos and video, roof views and lot overviews. Homes are where we start, but we fly land, camps, businesses and projects too.</p>
+<div class="placeholder" style="margin-top:34px"><span class="tag">DRAFT</span>
+<p>All prices, distances and package contents on this page are placeholders for review. Nothing here is final or published.</p></div>
+</div></section>
+
+<section><div class="wrap">
+<div class="sec-head rv"><div><div class="eyebrow mono">Packages <b>/ 03</b></div><h2>Pick a package.</h2></div>
+<p>Every package is flown by an FAA Part 107 certified remote pilot on DJI drones in 4K.</p></div>
+<div class="tiers">
+{tier("01","Basic","A quick aerial photo set that shows the house, the roofline and the lot.",["Edited aerial photos (count TBD)","High angle and top-down views","Online delivery"])}
+{tier("02","Standard","Photos plus a short aerial listing video, for listings and homeowners who want motion.",["Everything in Basic","Short edited aerial video (length TBD)","More angles of the lot and surroundings"],feat=True)}
+{tier("03","Premium","The full package: photos, a longer video and a roof and lot overview.",["Everything in Standard","Longer edited video (length TBD)","Roof and lot overview report"])}
+</div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap split-even">
+<div class="rv">
+<div class="eyebrow mono">Travel <b>/ Trip charge</b></div>
+<h2>Minimum trip charge by zone.</h2>
+<p style="color:var(--mute);margin-top:18px">Each shoot has a minimum charge based on distance from our base. Final zones and amounts are placeholders.</p>
+<table class="zones mono">
+<thead><tr><th>Zone</th><th>Distance</th><th>Minimum trip charge</th></tr></thead>
+<tbody>
+<tr><td>Zone 1</td><td>Up to [X] miles</td><td>$[TBD]</td></tr>
+<tr><td>Zone 2</td><td>[X] to [Y] miles</td><td>$[TBD]</td></tr>
+<tr><td>Zone 3</td><td>[Y] to [Z] miles</td><td>$[TBD]</td></tr>
+</tbody></table>
+<p class="radius">Maximum service radius: <span class="ph-inline">[TBD] miles</span></p>
+</div>
+<div class="rv">
+<div class="eyebrow mono">Add-ons <b>/ Extras</b></div>
+<h2>Add to any package.</h2>
+<ul class="addons">
+<li><span>Roof report (close-up roof photos and notes)</span><b>$[TBD]</b></li>
+<li><span>Lot overview (annotated aerial of the land)</span><b>$[TBD]</b></li>
+<li><span>Twilight or golden hour flight</span><b>$[TBD]</b></li>
+<li><span>Extra edited video cut (social or vertical)</span><b>$[TBD]</b></li>
+<li><span>Additional edited photos</span><b>$[TBD]</b></li>
+<li><span>Rush delivery</span><b>$[TBD]</b></li>
+</ul>
+<span class="ph-note">Draft add-on list. Items and prices to be confirmed.</span>
+</div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+<div class="quote-note rv">
+<h3>Every quote is confirmed per property.</h3>
+<p>Final quotes depend on the property, its size and location, airspace rules, weather and site conditions. We confirm the price with you before any flight is booked.</p>
+<div class="btns"><a class="btn" href="inquire.html">Request a quote <span class="arr">&rarr;</span></a><a class="btn ghost" href="services.html">See services</a></div>
+</div>
+</div></section>
+'''
+
 PAGES = {
  "index.html": ("Drone Estates | Drone photos and aerial views", "Drone photos and aerial views for homeowners, events, and real estate.", home),
  "services.html": ("Services | Drone Estates", "Drone photography for homeowners, parties and events, real estate agents, and custom views.", services),
+ "pricing.html": ("Pricing | Drone Estates", "Draft pricing for Drone Estates packages, trip charges and add-ons.", pricing),
  "gallery.html": ("Gallery | Drone Estates", "Example drone photos from Drone Estates.", gallery),
  "about.html": ("About | Drone Estates", "About Drone Estates.", about),
  "inquire.html": ("Inquire | Drone Estates", "Plan a drone shoot with Drone Estates.", inquire),
