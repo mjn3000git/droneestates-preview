@@ -273,7 +273,6 @@ form.inq .btn[disabled]{opacity:.5;cursor:not-allowed;margin-top:24px}
 .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .tier{background:var(--char-2);border:1px solid var(--line);padding:34px 30px;position:relative;display:flex;flex-direction:column}
 .tier.feat{border-color:var(--sky)}
-.tier .badge{position:absolute;top:-12px;left:24px;background:var(--sky);color:#06121d;padding:6px 10px;font-size:10px}
 .tier .num{color:var(--sky);display:block;margin-bottom:14px}
 .tier h3{font-size:30px}
 .tier .range{font:700 26px/1.25 var(--disp);margin:16px 0 14px;padding-bottom:16px;border-bottom:1px solid var(--line)}
@@ -294,3 +293,16 @@ form.inq .btn[disabled]{opacity:.5;cursor:not-allowed;margin-top:24px}
 .quote-note p{color:var(--mute);margin-top:12px;max-width:720px}
 @media (max-width:980px){.tiers,.split-even{grid-template-columns:1fr}.tiers{gap:30px}}
 @media (max-width:600px){.teaser,.quote-note{padding:28px 22px}.zones th,.zones td{padding:12px 6px}}
+.draft-badge{display:inline-block;margin-left:8px;background:#f2c230;color:#111;font:700 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:6px 9px}
+.teaser{align-items:flex-end}
+.teaser-copy{max-width:640px}
+.teaser .checks li b,.addons .t{color:#fff;font-weight:600}
+.addons .t{display:block;font-family:var(--disp);font-size:18px;margin-bottom:4px}
+.addons li span{color:#cfdbe6}
+.addons b{text-align:right}
+.moves{margin-top:40px;border:1px solid var(--line);background:var(--char-2);padding:30px}
+.zones small{display:block;font:400 13px/1.4 var(--sans);color:var(--mute);margin-top:4px;letter-spacing:0;text-transform:none}
+.zones td{font-size:15px;vertical-align:top}
+.zones th{font-size:11px}
+.card .from{margin-top:16px;color:var(--ice);font-size:15px;border-top:1px solid var(--line);padding-top:14px}
+.quote-note .addons{margin-top:18px}

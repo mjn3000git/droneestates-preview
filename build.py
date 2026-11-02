@@ -51,7 +51,7 @@ def page(slug, title, desc, body):
 {seo_head(slug, title, desc)}
 </head>
 <body>
-<div class="preview-banner">PREVIEW MOCK-UP, not the live site. Pricing shown is placeholder only.</div>
+<div class="preview-banner">PREVIEW MOCK-UP, not the live site. Pricing is a draft pending approval.</div>
 <header class="site-head"><div class="wrap">
 <a class="brand" href="index.html">{LOGO}<span>Drone Estates<small>Aerial photography</small></span></a>
 <input type="checkbox" id="mt" class="menu-toggle"><label for="mt" class="menu-btn" aria-label="Menu"><span></span></label>
@@ -135,10 +135,16 @@ home = f'''
 <section class="price-teaser" style="padding-top:0">
 <div class="wrap">
 <div class="teaser rv">
-<div><div class="eyebrow mono">Pricing <b>/ 03 tiers</b></div>
-<h2>Clear packages,<br>quoted per property.</h2>
-<p>Basic, Standard and Premium packages for listing photos and video, plus roof and lot views. Packages start at <span class="ph-inline">$[TBD]</span>, and every quote is confirmed for your property before the flight.</p></div>
-<div class="btns"><a class="btn" href="inquire.html">Request a quote <span class="arr">&rarr;</span></a><a class="btn ghost" href="pricing.html">See pricing</a></div>
+<div class="teaser-copy"><div class="eyebrow mono">Pricing <b>/ Draft</b></div>
+<h2>Clear pricing, no surprises</h2>
+<p>Aerial photos and video for real estate in the Lake George, Glens Falls and Schroon Lake area.</p>
+<ul class="checks">
+<li><b>Basic</b> from $250. Aerial photos and a short clip.</li>
+<li><b>Standard</b> from $475. Adds a full listing video and lot overview.</li>
+<li><b>Premium</b> from $750. Adds a marked-up roof and lot report.</li>
+</ul>
+<p>No travel charge within 15 miles of Queensbury. We serve properties up to 60 road miles away. Final quotes are confirmed after your inquiry.</p></div>
+<div class="btns"><a class="btn ghost" href="pricing.html">See packages</a><a class="btn" href="inquire.html">Send an inquiry <span class="arr">&rarr;</span></a></div>
 </div>
 </div>
 </section>
@@ -149,10 +155,10 @@ home = f'''
 '''
 
 # ---------- SERVICES ----------
-def card(id_, n, img, alt, title, text, tags, note=""):
+def card(id_, n, img, alt, title, text, tags, note="", start=""):
     t = "".join(f"<li>{x}</li>" for x in tags)
     nt = f'<span class="ph-note">{note}</span>' if note else ""
-    nt = f'<p class="from mono">Starting at <span class="ph-inline">$[TBD]</span> <a href="pricing.html">See pricing &rarr;</a></p>' + nt
+    nt = f'<p class="from">{start} <a class="mono" href="pricing.html">See pricing &rarr;</a></p>' + nt
     return f'''<article class="card rv" id="{id_}">{vf(img, alt, hud=f'<div class="hud tl mono"><span>{n}</span></div>')}
 <div class="body"><span class="num mono">Service {n}</span><h3>{title}</h3><p>{text}</p><ul>{t}</ul>{nt}</div></article>'''
 
@@ -164,11 +170,23 @@ services = f'''
 </div></section>
 <section><div class="wrap">
 <div class="cards">
-{card("homeowners","01","front.jpg","Front view of a home from a drone","Homeowners","Aerial photos of your home and property. See the house, the yard, the trees, and the land around it the way you never can from the ground.",["Home + property","High angle","Top down"])}
-{card("events","02","lawn.jpg","Overhead view of a backyard lawn and patio","Parties and events","Overhead coverage of your party or event and the setting it happens in, from the backyard to the open field.",["Parties","Gatherings","Venues"],"Sample photo. Event photos coming soon.")}
-{card("agents","03","overhead.jpg","High angle view of a home for a listing","Real estate agents","Listing aerials that show the whole lot, the roofline, and the surroundings, so buyers understand the property at a glance.",["Listings","Lot + land","Neighborhood"])}
-{card("custom","04","valley.jpg","Wide aerial landscape","Custom drone views","Anyone who wants drone photos or views. Land, a favorite spot, a project, or just the view from up there. Tell us what you have in mind.",["Land","Landscapes","Your idea"])}
+{card("homeowners","01","front.jpg","Front view of a home from a drone","Homeowners","Aerial photos of your home and property. See the house, the yard, the trees, and the land around it the way you never can from the ground.",["Home + property","High angle","Top down"], start="Aerial photos with a short clip, starting at $250.")}
+{card("events","02","lawn.jpg","Overhead view of a backyard lawn and patio","Parties and events","Overhead coverage of your party or event and the setting it happens in, from the backyard to the open field.",["Parties","Gatherings","Venues"],"Sample photo. Event photos coming soon.", start="Quoted per event. Send an inquiry with the date and place.")}
+{card("agents","03","overhead.jpg","High angle view of a home for a listing","Real estate agents","Listing aerials that show the whole lot, the roofline, and the surroundings, so buyers understand the property at a glance.",["Listings","Lot + land","Neighborhood"], start="Aerial listing photos with a short clip, starting at $250. Full listing video starting at $475.")}
+{card("custom","04","valley.jpg","Wide aerial landscape","Custom drone views","Anyone who wants drone photos or views. Land, a favorite spot, a project, or just the view from up there. Tell us what you have in mind.",["Land","Landscapes","Your idea"], start="Land and acreage maps starting at $250 for up to 10 acres. Other views quoted per property.")}
 </div>
+</div></section>
+<section style="padding-top:0"><div class="wrap">
+<div class="sec-head rv"><div><div class="eyebrow mono">Starting at <b>/ Draft pricing</b></div><h2>What it costs.</h2></div>
+<p>Final quotes are confirmed after your inquiry. Travel charges may apply beyond 15 miles of Queensbury.</p></div>
+<ul class="addons rv">
+<li><span><b class="t">Listing Photos and Clips</b>Aerial listing photos with a short clip.</span><b>Starting at $250</b></li>
+<li><span><b class="t">Listing Videos</b>Full aerial listing video with photos and a lot overview.</span><b>Starting at $475</b></li>
+<li><span><b class="t">Roof and Lot Reports</b>Marked-up roof and lot report, a visual review from aerial images (not a home inspection). $295 on its own, or $750 with full listing media.</span><b>Starting at $295</b></li>
+<li><span><b class="t">Land and Acreage</b>Overhead land maps with approximate boundary overlay, up to 10 acres.</span><b>Starting at $250</b></li>
+<li><span><b class="t">Camps and Commercial (coming soon)</b>Quoted per property. Send an inquiry with the address and what you need.</span><b>By quote</b></li>
+</ul>
+<div class="btns rv"><a class="btn ghost" href="pricing.html">See packages</a></div>
 </div></section>
 <section style="padding-top:0"><div class="wrap">
 <div class="sec-head rv"><div><div class="eyebrow mono">How it works <b>/ 03</b></div><h2>Simple from start to finish.</h2></div></div>
@@ -266,74 +284,96 @@ inquire = f'''
 </div>
 </aside>
 </div></section>
+<section style="padding-top:0"><div class="wrap">
+<div class="quote-note rv">
+<div class="eyebrow mono">Pricing and Packages <span class="draft-badge">Draft pricing</span></div>
+<p>Every property is different, so each package has a range. Your final quote is confirmed after you send an inquiry, before anything is booked.</p>
+<ul class="addons">
+<li><span><b class="t">Basic</b>Aerial photos plus a short clip.</span><b>$250 to $350</b></li>
+<li><span><b class="t">Standard</b>Everything in Basic, plus a full aerial listing video and a lot overview.</span><b>$475 to $695</b></li>
+<li><span><b class="t">Premium</b>Everything in Standard, plus a roof and lot report (a visual review, not a home inspection) and a short written summary.</span><b>$750 to $995</b></li>
+</ul>
+<p>Travel is measured in road miles from Queensbury: no charge up to 15 miles, $40 from 15 to 30, $75 from 30 to 45, and $125 from 45 to 60 on scheduled days. We do not travel past 60 road miles.</p>
+<div class="btns"><a class="btn ghost" href="pricing.html">See full pricing and add-ons</a></div>
+</div>
+</div></section>
 <script src="js/inquiry.js"></script>
 '''
 
-# ---------- PRICING (draft, placeholders for Grant) ----------
-PH = '<span class="ph-inline">[Price TBD, from Grant]</span>'
-def tier(n, name, blurb, items, feat=False):
+# ---------- PRICING (DRAFT, Grant's numbers, pending Matthew's OK) ----------
+def tier(n, name, rng, lead, items, feat=False):
     li = "".join(f"<li>{x}</li>" for x in items)
-    badge = '<span class="badge mono">Most popular (draft)</span>' if feat else ''
-    return f'''<article class="tier rv{" feat" if feat else ""}">{badge}
+    return f'''<article class="tier rv{" feat" if feat else ""}">
 <span class="num mono">Tier {n}</span><h3>{name}</h3>
-<div class="range">From $[X] to $[Y]<br>{PH}</div>
-<p>{blurb}</p><ul class="checks">{li}</ul>
-<span class="ph-note">Draft description. Final package contents to be confirmed.</span>
+<div class="range">{rng}</div>
+<p>{lead}</p><ul class="checks">{li}</ul>
 </article>'''
 
 pricing = f'''
 <section class="page-hero"><div class="wrap">
-<div class="eyebrow mono">Pricing <b>/ Draft</b></div>
-<h1>Pricing.</h1>
-<p>Three packages for drone listing photos and video, roof views and lot overviews. Homes are where we start, but we fly land, camps, businesses and projects too.</p>
-<div class="placeholder" style="margin-top:34px"><span class="tag">DRAFT</span>
-<p>All prices, distances and package contents on this page are placeholders for review. Nothing here is final or published.</p></div>
+<div class="eyebrow mono">Pricing <b>/ Packages</b> <span class="draft-badge">Draft pricing</span></div>
+<h1>Pricing and Packages</h1>
+<p>Every property is different, so each package has a range. Where your job lands depends on the size of the home, the size of the lot, and how much there is to cover. These ranges help you plan. Your final quote is confirmed after you send an inquiry, before anything is booked.</p>
 </div></section>
 
 <section><div class="wrap">
-<div class="sec-head rv"><div><div class="eyebrow mono">Packages <b>/ 03</b></div><h2>Pick a package.</h2></div>
-<p>Every package is flown by an FAA Part 107 certified remote pilot on DJI drones in 4K.</p></div>
 <div class="tiers">
-{tier("01","Basic","A quick aerial photo set that shows the house, the roofline and the lot.",["Edited aerial photos (count TBD)","High angle and top-down views","Online delivery"])}
-{tier("02","Standard","Photos plus a short aerial listing video, for listings and homeowners who want motion.",["Everything in Basic","Short edited aerial video (length TBD)","More angles of the lot and surroundings"],feat=True)}
-{tier("03","Premium","The full package: photos, a longer video and a roof and lot overview.",["Everything in Standard","Longer edited video (length TBD)","Roof and lot overview report"])}
+{tier("01","Basic","$250 to $350","Aerial photos plus a short clip.",["15 to 25 edited aerial photos","A 15 to 30 second aerial clip, sized for MLS and social media","Delivery in 2 business days"])}
+{tier("02","Standard","$475 to $695","Everything in Basic, plus:",["A full aerial listing video, 60 to 90 seconds, with music","A lot overview image showing the approximate property lines and key features"],feat=True)}
+{tier("03","Premium","$750 to $995","Everything in Standard, plus:",["A roof and lot report: a visual review with marked-up aerial images showing visible wear, damage, drainage and other items worth a closer look","A short written summary you can share with buyers, sellers or a contractor"])}
+</div>
+<div class="moves rv">
+<h3>What moves a price within the range</h3>
+<ul class="checks">
+<li>Home size and roof complexity</li>
+<li>Lot size (packages cover up to 5 acres)</li>
+<li>Extra buildings such as a garage, barn or shed</li>
+<li>Tree cover, terrain or airspace that takes more flight time</li>
+</ul>
 </div>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap split-even">
 <div class="rv">
-<div class="eyebrow mono">Travel <b>/ Trip charge</b></div>
-<h2>Minimum trip charge by zone.</h2>
-<p style="color:var(--mute);margin-top:18px">Each shoot has a minimum charge based on distance from our base. Final zones and amounts are placeholders.</p>
-<table class="zones mono">
-<thead><tr><th>Zone</th><th>Distance</th><th>Minimum trip charge</th></tr></thead>
+<div class="eyebrow mono">Travel <b>/ From Queensbury</b></div>
+<h2>Travel</h2>
+<p style="color:var(--mute);margin-top:18px">Measured in road miles from Queensbury.</p>
+<table class="zones">
+<thead><tr><th class="mono">Zone</th><th class="mono">Road miles</th><th class="mono">Trip charge</th></tr></thead>
 <tbody>
-<tr><td>Zone 1</td><td>Up to [X] miles</td><td>$[TBD]</td></tr>
-<tr><td>Zone 2</td><td>[X] to [Y] miles</td><td>$[TBD]</td></tr>
-<tr><td>Zone 3</td><td>[Y] to [Z] miles</td><td>$[TBD]</td></tr>
+<tr><td>Zone 1<small>Glens Falls, Queensbury, Lake George, Hudson Falls, Warrensburg</small></td><td>Up to 15</td><td>No charge</td></tr>
+<tr><td>Zone 2<small>Bolton Landing, Lake Luzerne, Saratoga Springs, Chestertown, Brant Lake</small></td><td>15 to 30</td><td>$40</td></tr>
+<tr><td>Zone 3<small>Schroon Lake, North Creek, Hague, Minerva</small></td><td>30 to 45</td><td>$75</td></tr>
+<tr><td>Zone 4<small>Ticonderoga, North Hudson, Indian Lake</small></td><td>45 to 60</td><td>$125, on scheduled days only</td></tr>
 </tbody></table>
-<p class="radius">Maximum service radius: <span class="ph-inline">[TBD] miles</span></p>
+<p class="radius">Maximum service radius: 60 road miles. We do not travel past 60 road miles from Queensbury.</p>
 </div>
 <div class="rv">
 <div class="eyebrow mono">Add-ons <b>/ Extras</b></div>
-<h2>Add to any package.</h2>
+<h2>Add-ons</h2>
 <ul class="addons">
-<li><span>Roof report (close-up roof photos and notes)</span><b>$[TBD]</b></li>
-<li><span>Lot overview (annotated aerial of the land)</span><b>$[TBD]</b></li>
-<li><span>Twilight or golden hour flight</span><b>$[TBD]</b></li>
-<li><span>Extra edited video cut (social or vertical)</span><b>$[TBD]</b></li>
-<li><span>Additional edited photos</span><b>$[TBD]</b></li>
-<li><span>Rush delivery</span><b>$[TBD]</b></li>
+<li><span>Land or acreage map, stitched overhead image with approximate boundary overlay</span><b>Up to 10 acres $250<br>10 to 25 acres $395<br>25 to 50 acres $595<br>Over 50 acres by quote</b></li>
+<li><span>Twilight shoot</span><b>$150</b></li>
+<li><span>Next-day delivery</span><b>$75</b></li>
+<li><span>Same-day delivery, when the schedule allows</span><b>$125</b></li>
+<li><span>Extra round of edits (one round is included)</span><b>$50</b></li>
+<li><span>Extra edited photos</span><b>$15 each</b></li>
+<li><span>Vertical social media reel</span><b>$125</b></li>
+<li><span>Extra building or structure beyond the main home</span><b>$50</b></li>
+<li><span>Return visit, such as a seasonal or progress update</span><b>$125 plus travel</b></li>
 </ul>
-<span class="ph-note">Draft add-on list. Items and prices to be confirmed.</span>
+<p class="radius" style="color:var(--mute)">Weather: if it is not safe to fly, we reschedule at no charge. A reshoot requested after a completed shoot is 50% of the package price.</p>
 </div>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
 <div class="quote-note rv">
-<h3>Every quote is confirmed per property.</h3>
-<p>Final quotes depend on the property, its size and location, airspace rules, weather and site conditions. We confirm the price with you before any flight is booked.</p>
-<div class="btns"><a class="btn" href="inquire.html">Request a quote <span class="arr">&rarr;</span></a><a class="btn ghost" href="services.html">See services</a></div>
+<h3>Good to know</h3>
+<ul class="checks">
+<li>The roof and lot report is a visual review from aerial images. It is not a licensed home inspection, an engineering report, or a land survey. Property lines on images are approximate.</li>
+<li>Final quotes depend on the property and conditions, and are confirmed after your inquiry.</li>
+</ul>
+<div class="btns"><a class="btn" href="inquire.html">Send an inquiry <span class="arr">&rarr;</span></a><a class="btn ghost" href="services.html">See services</a></div>
 </div>
 </div></section>
 '''
@@ -341,7 +381,7 @@ pricing = f'''
 PAGES = {
  "index.html": ("Drone Estates | Drone photos and aerial views", "Drone photos and aerial views for homeowners, events, and real estate.", home),
  "services.html": ("Services | Drone Estates", "Drone photography for homeowners, parties and events, real estate agents, and custom views.", services),
- "pricing.html": ("Pricing | Drone Estates", "Draft pricing for Drone Estates packages, trip charges and add-ons.", pricing),
+ "pricing.html": ("Pricing | Drone Estates", "Drone Estates packages, travel charges and add-ons.", pricing),
  "gallery.html": ("Gallery | Drone Estates", "Example drone photos from Drone Estates.", gallery),
  "about.html": ("About | Drone Estates", "About Drone Estates.", about),
  "inquire.html": ("Inquire | Drone Estates", "Plan a drone shoot with Drone Estates.", inquire),
