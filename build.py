@@ -5,7 +5,7 @@ ROOT = Path(__file__).parent
 
 LOGO = '''<svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="1" y="1" width="38" height="38" stroke="#3ea6f2" stroke-width="1.5"/><path d="M1 9V1h8M31 1h8v8M39 31v8h-8M9 39H1v-8" stroke="#fff" stroke-width="2"/><circle cx="20" cy="20" r="6" stroke="#fff" stroke-width="1.5"/><path d="M20 8v6M20 26v6M8 20h6M26 20h6" stroke="#3ea6f2" stroke-width="1.5"/></svg>'''
 
-NAV = [("index.html","Home"),("services.html","Services"),("pricing.html","Pricing"),("gallery.html","Gallery"),("about.html","About")]
+NAV = [("index.html","Home"),("services.html","Services"),("pricing.html","Pricing"),("build.html","Build a package"),("gallery.html","Gallery"),("about.html","About")]
 
 def vf(img, alt, extra="", hud="", cls="vf", lazy=True, attrs=""):
     load = ' loading="lazy"' if lazy else ''
@@ -143,7 +143,8 @@ home = f'''
 <li><b>Standard</b> from $475. Adds a full listing video and lot overview.</li>
 <li><b>Premium</b> from $750. Adds a marked-up roof and lot report.</li>
 </ul>
-<p>No travel charge within 15 miles of Queensbury. We serve properties up to 60 road miles away. Final quotes are confirmed after your inquiry.</p></div>
+<p>No travel charge within 15 miles of Queensbury or in Schroon Lake*. We serve properties up to 60 road miles away. Final quotes are confirmed after your inquiry.</p>
+<p style="font-size:14px">*Schroon Lake is included in Zone 1 at no travel charge because we're there often and schedule visits around regular trips. Same-day requests have the same-day fee no matter where you are.</p></div>
 <div class="btns"><a class="btn ghost" href="pricing.html">See packages</a><a class="btn" href="inquire.html">Send an inquiry <span class="arr">&rarr;</span></a></div>
 </div>
 </div>
@@ -293,8 +294,9 @@ inquire = f'''
 <li><span><b class="t">Standard</b>Everything in Basic, plus a full aerial listing video and a lot overview.</span><b>$475 to $695</b></li>
 <li><span><b class="t">Premium</b>Everything in Standard, plus a roof and lot report (a visual review, not a home inspection) and a short written summary.</span><b>$750 to $995</b></li>
 </ul>
-<p>Travel is measured in road miles from Queensbury: no charge up to 15 miles, $40 from 15 to 30, $75 from 30 to 45, and $125 from 45 to 60 on scheduled days. We do not travel past 60 road miles.</p>
-<div class="btns"><a class="btn ghost" href="pricing.html">See full pricing and add-ons</a></div>
+<p>Travel is measured in road miles from Queensbury: no charge up to 15 miles and in Schroon Lake*, $40 from 15 to 30, $75 from 30 to 45, and $125 from 45 to 60 on scheduled days. We do not travel past 60 road miles.</p>
+<p class="radius" style="color:var(--mute)">*Schroon Lake is included in Zone 1 at no travel charge because we're there often and schedule visits around regular trips. Same-day requests have the same-day fee no matter where you are.</p>
+<div class="btns"><a class="btn" href="build.html">Design your own package <span class="arr">&rarr;</span></a><a class="btn ghost" href="pricing.html">See full pricing and add-ons</a></div>
 </div>
 </div></section>
 <script src="js/inquiry.js"></script>
@@ -341,11 +343,12 @@ pricing = f'''
 <table class="zones">
 <thead><tr><th class="mono">Zone</th><th class="mono">Road miles</th><th class="mono">Trip charge</th></tr></thead>
 <tbody>
-<tr><td>Zone 1<small>Glens Falls, Queensbury, Lake George, Hudson Falls, Warrensburg</small></td><td>Up to 15</td><td>No charge</td></tr>
+<tr><td>Zone 1<small>Glens Falls, Queensbury, Lake George, Hudson Falls, Warrensburg, Schroon Lake*</small></td><td>Up to 15, plus Schroon Lake*</td><td>No charge</td></tr>
 <tr><td>Zone 2<small>Bolton Landing, Lake Luzerne, Saratoga Springs, Chestertown, Brant Lake</small></td><td>15 to 30</td><td>$40</td></tr>
-<tr><td>Zone 3<small>Schroon Lake, North Creek, Hague, Minerva</small></td><td>30 to 45</td><td>$75</td></tr>
+<tr><td>Zone 3<small>North Creek, Hague, Minerva</small></td><td>30 to 45</td><td>$75</td></tr>
 <tr><td>Zone 4<small>Ticonderoga, North Hudson, Indian Lake</small></td><td>45 to 60</td><td>$125, on scheduled days only</td></tr>
 </tbody></table>
+<p class="radius">*Schroon Lake is included in Zone 1 at no travel charge because we're there often and schedule visits around regular trips. Same-day requests have the same-day fee no matter where you are.</p>
 <p class="radius">Maximum service radius: 60 road miles. We do not travel past 60 road miles from Queensbury.</p>
 </div>
 <div class="rv">
@@ -373,12 +376,13 @@ pricing = f'''
 <li>The roof and lot report is a visual review from aerial images. It is not a licensed home inspection, an engineering report, or a land survey. Property lines on images are approximate.</li>
 <li>Final quotes depend on the property and conditions, and are confirmed after your inquiry.</li>
 </ul>
-<div class="btns"><a class="btn" href="inquire.html">Send an inquiry <span class="arr">&rarr;</span></a><a class="btn ghost" href="services.html">See services</a></div>
+<div class="btns"><a class="btn" href="build.html">Design your own package <span class="arr">&rarr;</span></a><a class="btn ghost" href="inquire.html">Send an inquiry</a><a class="btn ghost" href="services.html">See services</a></div>
 </div>
 </div></section>
 '''
 
 PAGES = {
+ "build.html": ("Build a package | Drone Estates", "Design your own Drone Estates package and send it as an inquiry.", (ROOT/"src"/"build_body.html").read_text()),
  "index.html": ("Drone Estates | Drone photos and aerial views", "Drone photos and aerial views for homeowners, events, and real estate.", home),
  "services.html": ("Services | Drone Estates", "Drone photography for homeowners, parties and events, real estate agents, and custom views.", services),
  "pricing.html": ("Pricing | Drone Estates", "Drone Estates packages, travel charges and add-ons.", pricing),
